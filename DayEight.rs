@@ -1,6 +1,7 @@
 use std::fs::File;
 use std::io::prelude::*;
 use std::collections::HashMap;
+use std::collections::HashSet;
 
 fn main() {
 //open file
@@ -21,8 +22,8 @@ fn main() {
         let unwanted_chars = vec!['.','\r','\n'];
         if unwanted_chars.contains(&antenna){continue;}
         if !antenna_locs.contains_key(&antenna){
-            let positions = vec![coords];
-            antenna_locs.insert(antenna, positions);
+            let positions = vec![coords];            antenna_locs.insert(antenna, positions);
+
         }
         else
         {
@@ -33,7 +34,7 @@ fn main() {
     }
     println!("{:#?}", antenna_locs); 
 
-    let mut seen = Vec::new();
+    let mut seen = HashSet::new();
     for (key,val) in antenna_locs.iter()
     {
         if val.len() == 1 {continue;}
@@ -57,10 +58,10 @@ fn main() {
                 let mut test_pos = val1.clone();
                 while InBounds( &test_pos, line_length, num_lines)
                 {
-                    if !seen.contains(&test_pos)
-                    {
-                        seen.push(test_pos);
-                    }
+                    
+                    
+                    seen.insert(test_pos);
+                    
                     
                     
                     test_pos = AddTuples(&test_pos, &diff);
@@ -70,10 +71,9 @@ fn main() {
                 test_pos = val1.clone(); // there are no nodes in bet
                 while InBounds(&test_pos,line_length, num_lines)
                 {
-                    if !seen.contains(&test_pos)
-                    {
-                        seen.push(test_pos);
-                    }
+                    
+                    seen.insert(test_pos);
+                    
                     test_pos = SubtractTuples(&test_pos, &diff);
                 }
 
@@ -83,7 +83,7 @@ fn main() {
 
         }
     }
-    seen.sort_by(|a,b| a.1.cmp(&b.1));
+    //seen.sort_by(|a,b| a.1.cmp(&b.1));
     println!("{:#?}. {}", seen, seen.len());
     
 

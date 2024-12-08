@@ -14,7 +14,7 @@ fn main() {
     for line in contents.lines(){
         
         println!("{}, total: {}", line, numsafe);
-        let words_int: Vec<i32> = line.split_whitespace().map(|x| x.parse::<i32>().unwrap()).collect::<Vec<i32>>();
+       y let words_int: Vec<i32> = line.split_whitespace().map(|x| x.parse::<i32>().unwrap()).collect::<Vec<i32>>();
         if checkSafetyVector(&words_int, true){numsafe+=1;};
        
         
